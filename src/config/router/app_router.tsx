@@ -12,10 +12,14 @@ const AppRouter = (): React.ReactElement => {
     return (
         <Routes>
             {/* 404(Not Found)시 LoginView로 Redirect */}
-            <Route path="/*" element={<Navigate to={routes.LOGIN.path}></Navigate>}></Route>
+            <Route path="/*" element={<Navigate to={routes.LOGIN.path}></Navigate>}/>
+
+            {/* Public Page */}
             <Route element={<PrivateRoute isAuthenticated={isAuthenticated} isPrivate={false} />}>
                 <Route path={routes.LOGIN.path} element={routes.LOGIN.element} />
             </Route>
+
+            {/* Private Page(have to authenticated) */}
             <Route element={<PrivateRoute isAuthenticated={isAuthenticated} isPrivate={true} />}>
                 <Route path={routes.DISPATCH.path} element={routes.DISPATCH.element} />
                 <Route path={routes.HOME.path} element={routes.HOME.element} />
