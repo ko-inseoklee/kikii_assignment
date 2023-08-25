@@ -3,7 +3,7 @@ import LoginView from "./login_view"
 import { loginApi } from "../../apis/auth/auth";
 import { useAppDispatch } from "../../config/redux/hooks";
 import { showAlert } from "../../config/redux/slices/alertSlice";
-import { UserModel, userModelFromJson } from "../../apis/auth/user_model";
+import { UserModel } from "../../apis/auth/user_model";
 import { setCurrentUser } from "../../config/redux/slices/userSlice";
 import { setToken } from "../../config/redux/slices/tokenSlice";
 
@@ -44,13 +44,13 @@ const Login = (): React.ReactElement => {
     }
 
     const props: LoginProps = {
-        id: id,
-        password: password,
-        showPassword: showPassword,
-        onChangeId: onChangeId,
-        onChangePassword: onChangePassword,
-        togglePasswordVisible: togglePasswordVisible,
-        onSubmit: onSubmit
+        id,
+        password,
+        showPassword,
+        onChangeId,
+        onChangePassword,
+        togglePasswordVisible,
+        onSubmit
     }
 
     return <LoginView {...props} />
