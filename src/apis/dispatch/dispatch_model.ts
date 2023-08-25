@@ -7,6 +7,8 @@ export type DispatchModel = {
     busId: number,
     busNumber: string,
     startTime: string,
-    unixStartTime?: string,
+    unixStartTime?: string | null,
     busRound: number,
 }
+
+export type ListDispatchModel = DispatchModel[];
