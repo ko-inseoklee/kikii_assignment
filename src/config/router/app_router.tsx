@@ -2,11 +2,12 @@ import { BrowserRouter, BrowserRouterProps, Navigate, Route, RouterProps, Routes
 import { useEffect, useState } from "react";
 import PrivateRoute from "./private_route";
 import { routes } from "./routes";
+import { useAppSelector } from "../redux/hooks";
 
 const AppRouter = (): React.ReactElement => {
 
     //Reducer 들어갈 자리.
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const isAuthenticated = useAppSelector(state => state.token.token);
 
 
     return (

@@ -1,21 +1,30 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   timeout: 1000,
 });
 
-const jwtPrefix = 'Bearer ';
+const jwtPrefix = "Bearer ";
 
-instance.interceptors.request.use(config => {
-    const authorization: string = jwtPrefix + localStorage.getItem('access_token');
-    config.headers['Authorization'] = authorization;
-    
+instance.interceptors.request.use(
+  (config) => {
+    const authorization: string =
+      jwtPrefix + localStorage.getItem("access_token");
+    config.headers["Authorization"] = authorization;
+
     return config;
-}, (error) => {
-    console.log(error);
+  },
+  (error: AxiosError) => {
+    return Promise.reject<AxiosError>(error);
+  }
+);
 
-    return Promise.reject(error);
-});
+instance.interceptors.response.use(
+  (response) => response,
+  (error: AxiosError) => {
+    return Promise.reject<AxiosError>(error);
+  }
+);
 
 export default instance;

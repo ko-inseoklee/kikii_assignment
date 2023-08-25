@@ -1,21 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, RouterProvider } from 'react-router-dom';
-import router from './config/router/app_router';
 import AppRouter from './config/router/app_router';
+import { Provider } from 'react-redux';
+import store from './config/redux/store';
+import AlertComponent from './components/alert_component';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AppRouter />
-    </BrowserRouter>
-
+    <Provider store={store}>
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
+      <AlertComponent />
+    </Provider>
   </React.StrictMode>
 );
 

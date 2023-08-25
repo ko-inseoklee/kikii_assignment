@@ -1,6 +1,11 @@
 import { useState } from "react"
 import LoginView from "./login_view"
 import { loginApi } from "../../apis/auth/auth";
+import { useAppDispatch } from "../../config/redux/hooks";
+import { showAlert } from "../../config/redux/slices/alertSlice";
+import { UserModel, userModelFromJson } from "../../apis/auth/user_model";
+import { setCurrentUser } from "../../config/redux/slices/userSlice";
+import { setToken } from "../../config/redux/slices/tokenSlice";
 
 export interface LoginProps {
     id: string,
@@ -9,7 +14,7 @@ export interface LoginProps {
     onChangeId(e: React.ChangeEvent<HTMLInputElement>): void,
     onChangePassword(e: React.ChangeEvent<HTMLInputElement>): void,
     togglePasswordVisible(): void,
-    onSubmit(e: React.FormEvent): void    
+    onSubmit(e: React.FormEvent): void
 }
 
 const Login = (): React.ReactElement => {
@@ -20,12 +25,22 @@ const Login = (): React.ReactElement => {
     const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => setId(e.target.value);
     const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
     const togglePasswordVisible = () => setShowPassword(!showPassword);
+    const dispatch = useAppDispatch();
 
-    const onSubmit = async (e: React.FormEvent) => {
+    const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const result = await loginApi(id, password);
 
-        console.log(result);
+        loginApi(id, password).then((response) => {
+            console.log(response);
+
+            const userData: UserModel = response.data.object;
+
+            dispatch(setCurrentUser(userData));
+            dispatch(setToken(userData.token));
+
+        }).catch(error => {
+            dispatch(showAlert("일치하는 계정정보가 없습니다."));
+        });
     }
 
     const props: LoginProps = {
@@ -38,7 +53,7 @@ const Login = (): React.ReactElement => {
         onSubmit: onSubmit
     }
 
-    return <LoginView {...props}/>
+    return <LoginView {...props} />
 }
 
 export default Login;
