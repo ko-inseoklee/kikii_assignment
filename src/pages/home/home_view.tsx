@@ -1,6 +1,10 @@
+import { BaseLayout } from "../../components/base_layout";
+
 const HomeView = () => {
 
-    return <div>home</div>
+    return <BaseLayout>
+        <div>home</div>
+    </BaseLayout>
 }
 
 export default HomeView;

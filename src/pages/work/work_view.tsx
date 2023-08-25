@@ -1,6 +1,10 @@
+import { BaseLayout } from "../../components/base_layout";
+
 const WorkView = () => {
 
-    return <div>work</div>
+    return <BaseLayout>
+        <div>work</div>
+    </BaseLayout>
 }
 
 export default WorkView;

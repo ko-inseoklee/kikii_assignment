@@ -1,6 +1,10 @@
+import { BaseLayout } from "../../components/base_layout";
+
 const DispatchView = () => {
 
-    return <div>dispatch</div>
+    return <BaseLayout>
+        <div>dispatch</div>
+    </BaseLayout>
 }
 
 export default DispatchView;
