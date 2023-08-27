@@ -4,7 +4,7 @@ export type DispatchTableRowModel = {
     startOrder: number,
     busNumber: string,
     driverName: string,
-    [busRound: number]: BusRoundModel
+    [busRound: number]: BusRoundModel,
 }
 
 export type BusRoundModel = {
@@ -14,7 +14,7 @@ export type BusRoundModel = {
 }
 
 export const convertResponseToRowModel = (list: ListDispatchModel) => {
-    const groupData: Record<number, ListDispatchModel> = list.reduce((result: Record<number, ListDispatchModel>, item: DispatchModel) => {
+    const groupData: Record<string, ListDispatchModel> = list.reduce((result: Record<string, ListDispatchModel>, item: DispatchModel) => {
         if (!result[item.startOrder]) {
             result[item.startOrder] = [];
           }
@@ -25,7 +25,7 @@ export const convertResponseToRowModel = (list: ListDispatchModel) => {
     const dispatchTableList: DispatchTableRowModel[] = [];
 
     Object.keys(groupData).forEach(element => {
-        const list: ListDispatchModel = groupData[parseInt(element)];
+        const list: ListDispatchModel = groupData[element];
         
         const dispatchTableData: DispatchTableRowModel = {
             startOrder: list[0].startOrder,
