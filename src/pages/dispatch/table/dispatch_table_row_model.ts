@@ -1,4 +1,4 @@
-import { DispatchModel, ListDispatchModel } from "../../../apis/dispatch/dispatch_model"
+import { DispatchModel, DispatchModelList } from "../../../apis/dispatch/dispatch_model"
 
 export type DispatchTableRowModel = {
     startOrder: number,
@@ -13,8 +13,8 @@ export type BusRoundModel = {
     startTime: string | null
 }
 
-export const convertResponseToRowModel = (list: ListDispatchModel) => {
-    const groupData: Record<string, ListDispatchModel> = list.reduce((result: Record<string, ListDispatchModel>, item: DispatchModel) => {
+export const convertResponseToRowModel = (list: DispatchModelList) => {
+    const groupData: Record<string, DispatchModelList> = list.reduce((result: Record<string, DispatchModelList>, item: DispatchModel) => {
         if (!result[item.startOrder]) {
             result[item.startOrder] = [];
           }
@@ -25,7 +25,7 @@ export const convertResponseToRowModel = (list: ListDispatchModel) => {
     const dispatchTableList: DispatchTableRowModel[] = [];
 
     Object.keys(groupData).forEach(element => {
-        const list: ListDispatchModel = groupData[element];
+        const list: DispatchModelList = groupData[element];
         
         const dispatchTableData: DispatchTableRowModel = {
             startOrder: list[0].startOrder,

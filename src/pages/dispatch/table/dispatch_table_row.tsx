@@ -6,16 +6,14 @@ const DispatchTableRow = ({item, headers, index}: {item: DispatchTableRowModel, 
         headers.map((header, index) => (
             <th key={index}>
                 {typeof header === 'number' ? (
-                    // 숫자인 경우에 원하는 처리
-                    // 예: item[header] * 2
                     item[header]?.startTime
                 ):
                 
                 header === "startOrder" ? (
-                    item.startOrder + 1 // 문자열인 경우 그대로 출력
+                    item.startOrder + 1
                 ) : 
                 header === "busNumber" ? (
-                    item.busNumber // 문자열인 경우 그대로 출력
+                    item.busNumber
                 ) : item.driverName
                 }
             </th>

@@ -11,4 +11,4 @@ export type DispatchModel = {
     busRound: number,
 }
 
-export type ListDispatchModel = DispatchModel[];
+export type DispatchModelList = DispatchModel[];

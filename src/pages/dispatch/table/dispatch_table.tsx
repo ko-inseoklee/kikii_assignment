@@ -1,13 +1,9 @@
-import { createColumnHelper, useReactTable } from "@tanstack/react-table";
-import { dispatchList } from "./dummyData";
 import { DispatchTableRowModel, convertResponseToRowModel } from "./dispatch_table_row_model";
 import DispatchTableRow from "./dispatch_table_row";
+import { DispatchModelList } from "../../../apis/dispatch/dispatch_model";
 
-const DispatchTable = (): React.ReactElement => {
-
-    const dataList: DispatchTableRowModel[] = convertResponseToRowModel(dispatchList);
-
-    // const headers = Object.keys(dataList[0]);
+const DispatchTable = ({dataList}: {dataList: DispatchModelList}): React.ReactElement => {
+    const convertDataList: DispatchTableRowModel[] = convertResponseToRowModel(dataList);
 
     const basicHeaderColumns = ["startOrder", "busNumber", "driverName"];
     const busRoundColumns = [];
@@ -26,7 +22,7 @@ const DispatchTable = (): React.ReactElement => {
                 </tr>
             </thead>
             <tbody>
-                {dataList.map((item, rowIndex) => (
+                {convertDataList.map((item, rowIndex) => (
                     <DispatchTableRow item={item} headers={headers} index={rowIndex} />
                 ))}
             </tbody>

@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
-  timeout: 1000,
+  timeout: 5000,
 });
 
 const jwtPrefix = "Bearer ";
@@ -10,7 +10,7 @@ const jwtPrefix = "Bearer ";
 instance.interceptors.request.use(
   (config) => {
     const authorization: string =
-      jwtPrefix + localStorage.getItem("access_token");
+      jwtPrefix + localStorage.getItem("token");
     config.headers["Authorization"] = authorization;
 
     return config;
