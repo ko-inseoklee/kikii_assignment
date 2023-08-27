@@ -3,8 +3,9 @@ import DispatchTableRow from "./dispatch_table_row";
 import { DispatchModelList } from "../../../apis/dispatch/dispatch_model";
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd";
+import { StyledTable, StyledTableRow, StyledTableCell } from "./dispatch_table.styled";
 
-const DispatchTable = ({ dataList }: { dataList: DispatchModelList }): React.ReactElement => {
+const DispatchTable = ({ dataList, showModal }: { dataList: DispatchModelList, showModal: boolean }): React.ReactElement => {
 
     const [convertDataList, setConvertDataList] = useState<DispatchTableRowModel[]>([]);
 
@@ -28,36 +29,36 @@ const DispatchTable = ({ dataList }: { dataList: DispatchModelList }): React.Rea
     useEffect(() => {
         const convertedData = convertResponseToRowModel(dataList);
         setConvertDataList(convertedData);
-    },[dataList]);
+    }, [dataList]);
 
     return (
         <DragDropContext onDragEnd={handleDragEnd}>
-            <table>
+            <StyledTable>
                 <thead>
-                    <tr key={basicHeaderColumns.length}>
+                    <StyledTableRow key={basicHeaderColumns.length}>
                         {headers.map((header, index) => (
-                            <th key={index}>{
+                            <StyledTableCell key={index}>{
                                 typeof header === 'string' ? (
                                     basicHeaderColumnsInKorean[index]
                                 ) : header
-                            }</th>
+                            }</StyledTableCell>
                         ))}
-                    </tr>
+                    </StyledTableRow>
                 </thead>
                 <Droppable droppableId="table">
                     {
-                        (provider: DroppableProvided) => (
+                        (provider: DroppableProvided, snapshot) => (
                             <tbody ref={provider.innerRef}
                                 {...provider.droppableProps}>
                                 {convertDataList.map((item, index) => (
-                                        <DispatchTableRow item={item} headers={headers} key={index} index={index}/>
+                                    <DispatchTableRow item={item} headers={headers} key={index} index={index} />
                                 ))}
                                 {provider.placeholder}
                             </tbody>
                         )
                     }
                 </Droppable>
-            </table>
+            </StyledTable>
         </DragDropContext>
     );
 }

@@ -1,7 +1,10 @@
-import { Draggable, DraggableProvided } from "react-beautiful-dnd";
+import { Draggable } from "react-beautiful-dnd";
 import { useAppDispatch, useAppSelector } from "../../../config/redux/hooks";
 import { changeModalData, showModal } from "../../../config/redux/slices/dispatch_modification_modal_slice";
 import { DispatchTableRowModel } from "./dispatch_table_row_model"
+import { StyledTableCell, StyledButton } from "./dispatch_table.styled";
+
+
 const DispatchTableRow = ({ item, headers, index }: { item: DispatchTableRowModel, headers: (string | number)[], index: number }) => {
     const isShowModal = useAppSelector(state => state.dispatchModal.isShowModal);
     const dispatch = useAppDispatch()
@@ -19,28 +22,33 @@ const DispatchTableRow = ({ item, headers, index }: { item: DispatchTableRowMode
     return (<Draggable draggableId={index.toString()} index={index}>
         {(provider) => (
             <tr key={index} ref={provider.innerRef}
-            {...provider.draggableProps}
-            {...provider.dragHandleProps}>
+                {...provider.draggableProps}
+                {...provider.dragHandleProps}>
                 {
-                    (headers.map((header, index) => (
-                        <th key={item.busNumber + item.driverName + index + item.startOrder}>
-                            {typeof header === 'number' ? (
-                                <button onClick={() => handleBusRoundClick(header)}>{
+                    headers.map((header, index) => (
+                        typeof header === 'number' ? (
+                            <StyledTableCell key={item.busNumber + item.driverName + index + item.startOrder} >
+                                <StyledButton onClick={() => handleBusRoundClick(header)}>{
                                     item[header]?.startTime
-                                }</button>
-                            ) :
+                                }</StyledButton>
+                            </StyledTableCell>
+                        ) :
 
-                                header === "startOrder" ? (
-                                    item.startOrder + 1
-                                ) :
-                                    header === "busNumber" ? (
-                                        item.busNumber
-                                    ) : item.driverName
-                            }
-                        </th>
-                    )))
-                }
+                            header === "startOrder" ? (
+                                <StyledTableCell className="order" key={item.busNumber + item.driverName + index + item.startOrder} >
+                                    {item.startOrder + 1}
+                                </StyledTableCell>
+                            ) :
+                                header === "busNumber" ? (
+                                    <StyledTableCell className="base" key={item.busNumber + item.driverName + index + item.startOrder} >
+                                        {item.busNumber}
+                                    </StyledTableCell>
+                                ) : <StyledTableCell className="base" key={item.busNumber + item.driverName + index + item.startOrder}>
+                                    {item.driverName}
+                                </StyledTableCell>
+                    ))}
             </tr>
+            
         )}
     </Draggable>)
 

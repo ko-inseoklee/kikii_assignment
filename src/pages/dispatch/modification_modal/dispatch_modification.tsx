@@ -76,8 +76,9 @@ const DispatchModification = () => {
     }
 
     useEffect(() => {
-        setHour(splitHourAndMinute()[0]);
-        setMinute(splitHourAndMinute()[1]);
+        const hourAndMinute = splitHourAndMinute();
+        setHour(hourAndMinute[0]);
+        setMinute(hourAndMinute[1]);
     }, [selectedBusRound]);
 
     const props: DispatchModificationProps = {

@@ -3,23 +3,44 @@ import { convertDateToDispatchForm } from "../../utils/date_utiles";
 import { DispatchProps } from "./dispatch";
 import DispatchModification from "./modification_modal/dispatch_modification";
 import DispatchTable from "./table/dispatch_table";
+import { StyledButton, StyledDateControls, StyledDateText, StyledDispatchView, StyledGuideText } from "./dispatch.styled";
 
-const DispatchView = ({ currentDate, changePrevDate, changeNextDate, isFirstDate, isLastDate, tableDataList, showModal }: DispatchProps) => {
-
-    
-
-    return <BaseLayout>
-        <div>
-            {!isFirstDate ? <button onClick={() => changePrevDate()}>&lt;</button> : <div></div>}
-            <span>{convertDateToDispatchForm(currentDate)}</span>
-            {!isLastDate ? <button onClick={() => changeNextDate()}>&gt;</button> : <div></div>}
-        </div>
-        <div>시간 및 차량, 성명란을 눌러 수정하세요.</div>
-        <DispatchTable dataList={tableDataList}/>
-        <div>
+const DispatchView = ({
+    currentDate,
+    changePrevDate,
+    changeNextDate,
+    isFirstDate,
+    isLastDate,
+    tableDataList,
+    showModal,
+}: DispatchProps) => {
+    return (
+        <BaseLayout>
+            <StyledDispatchView className={showModal? 'shrinked' : ""}>
+                <StyledDateControls>
+                    {!isFirstDate ? (
+                        <StyledButton onClick={() => changePrevDate()}>&lt;</StyledButton>
+                    ) : (
+                        <div></div>
+                    )}
+                    <StyledDateText>{convertDateToDispatchForm(currentDate)}</StyledDateText>
+                    {!isLastDate ? (
+                        <StyledButton onClick={() => changeNextDate()}>&gt;</StyledButton>
+                    ) : (
+                        <div></div>
+                    )}
+                </StyledDateControls>
+                <StyledGuideText >시간 및 차량, 성명란을 눌러 수정하세요.</StyledGuideText>
+                <DispatchTable dataList={tableDataList} showModal />
+            </StyledDispatchView>
             {showModal && <DispatchModification />}
-        </div>
-    </BaseLayout>
-}
+        </BaseLayout>
+    );
+};
 
 export default DispatchView;
+
+
+
+
+

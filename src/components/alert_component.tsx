@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../config/redux/hooks';
 import { closeAlert } from '../config/redux/slices/alert_slice';
+import { BackgroundOverlay, AlertContainer, CloseButton } from './alert.styled';
+
 
 const AlertComponent = (): React.ReactElement => {
   const showAlert = useAppSelector(state => state.alert.showAlert);
@@ -10,19 +11,18 @@ const AlertComponent = (): React.ReactElement => {
 
   const close = () => dispatch(closeAlert());
 
-  return (
-    <div>
-      {showAlert && (
-        <div>
-          {message}
-          <button onClick={() => close()}>
-            닫기
-          </button>
-        </div>
-      )}
-
-    </div>
-  );
+  return <div>
+    {
+      showAlert && (
+        <BackgroundOverlay>
+          <AlertContainer>
+            <div>{message}</div>
+            <CloseButton onClick={() => close()}>닫기</CloseButton>
+          </AlertContainer>
+        </BackgroundOverlay>
+      )
+    }
+  </div>
 };
 
 export default AlertComponent;

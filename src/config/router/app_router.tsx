@@ -1,5 +1,4 @@
-import { BrowserRouter, BrowserRouterProps, Navigate, Route, RouterProps, Routes, createBrowserRouter, useHref, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./private_route";
 import { routes } from "./routes";
 import { useAppSelector } from "../redux/hooks";
