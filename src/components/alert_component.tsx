@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../config/redux/hooks';
-import { closeAlert } from '../config/redux/slices/alertSlice';
+import { closeAlert } from '../config/redux/slices/alert_slice';
 
 const AlertComponent = (): React.ReactElement => {
   const showAlert = useAppSelector(state => state.alert.showAlert);

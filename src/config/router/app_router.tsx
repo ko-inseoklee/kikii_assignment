@@ -6,8 +6,8 @@ import { useAppSelector } from "../redux/hooks";
 
 const AppRouter = (): React.ReactElement => {
 
-    //Reducer 들어갈 자리.
     const isAuthenticated = useAppSelector(state => state.token.token);
+    const currentUser = useAppSelector(state => state.user.currentUser);
 
 
     return (
@@ -16,12 +16,12 @@ const AppRouter = (): React.ReactElement => {
             <Route path="/*" element={<Navigate to={routes.LOGIN.path}></Navigate>}/>
 
             {/* Public Page */}
-            <Route element={<PrivateRoute isAuthenticated={isAuthenticated} isPrivate={false} />}>
+            <Route element={<PrivateRoute isAuthenticated={isAuthenticated && currentUser} isPrivate={false} />}>
                 <Route path={routes.LOGIN.path} element={routes.LOGIN.element} />
             </Route>
 
             {/* Private Page(have to authenticated) */}
-            <Route element={<PrivateRoute isAuthenticated={isAuthenticated} isPrivate={true} />}>
+            <Route element={<PrivateRoute isAuthenticated={isAuthenticated  && currentUser} isPrivate={true} />}>
                 <Route path={routes.DISPATCH.path} element={routes.DISPATCH.element} />
                 <Route path={routes.HOME.path} element={routes.HOME.element} />
                 <Route path={routes.WORK.path} element={routes.WORK.element} />

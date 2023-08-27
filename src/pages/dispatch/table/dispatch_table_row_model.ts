@@ -10,9 +10,12 @@ export type DispatchTableRowModel = {
 export type BusRoundModel = {
     dispatchId: number | null,
     busRound: number | null,
-    startTime: string | null
+    startTime: string | null,
+    driverName: string
 }
 
+
+//API Response를 table에 보여줄 타입으로 변환하는 코드.
 export const convertResponseToRowModel = (list: DispatchModelList) => {
     const groupData: Record<string, DispatchModelList> = list.reduce((result: Record<string, DispatchModelList>, item: DispatchModel) => {
         if (!result[item.startOrder]) {
@@ -34,17 +37,16 @@ export const convertResponseToRowModel = (list: DispatchModelList) => {
         };
         
         list.forEach(element => {
-            dispatchTableData[element.busRound] = <BusRoundModel>{
+            dispatchTableData[element.busRound] = {
                 dispatchId: element.id,
                 busRound: element.busRound,
-                startTime: element.startTime
-            }
+                startTime: element.startTime,
+                driverName: element.driverName
+            } as BusRoundModel;
         });
 
         dispatchTableList.push(dispatchTableData);
     });
-
-    console.log(dispatchTableList);
 
     return dispatchTableList;
 }

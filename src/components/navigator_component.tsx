@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../config/redux/hooks";
 import avatar from "../assets/avatar.png";
-import { removeToken } from "../config/redux/slices/tokenSlice";
-import { removeUser } from "../config/redux/slices/userSlice";
+import { removeToken } from "../config/redux/slices/token_slice";
+import { removeUser } from "../config/redux/slices/user_slice";
 
 export const NavigatorComponent = () => {
     const currentUser = useAppSelector(state => state.user.currentUser);

@@ -3,6 +3,7 @@ import DispatchView from "./dispatch_view"
 import {convertYYYYmmDD, handleNextDay, handlePrevDay } from "../../utils/date_utiles";
 import { getDispatchListApi } from "../../apis/dispatch/dispatch";
 import { DispatchModelList } from "../../apis/dispatch/dispatch_model";
+import { useAppSelector } from "../../config/redux/hooks";
 
 export interface DispatchProps {
     currentDate: string,
@@ -10,18 +11,22 @@ export interface DispatchProps {
     changeNextDate(): void,
     isFirstDate: boolean,
     isLastDate: boolean,
-    tableDataList: DispatchModelList
+    tableDataList: DispatchModelList,
+    showModal: boolean
 }
 
 const Dispatch = () => {
+    const showModal = useAppSelector(state => state.dispatchModal.isShowModal);
+
+
     const [currentDate, setCurrentDate] = useState("2023-07-18");
     const firstDate = "2023-07-17";
     const lastDate = "2023-07-20";
 
     const [dispatchDataList, setDispatchDataList] = useState<DispatchModelList>([]);
 
-    const [isFirstDate, setIsFirstDate] = useState(currentDate == firstDate);
-    const [isLastDate, setIsLastDate] = useState(currentDate == lastDate);
+    const [isFirstDate, setIsFirstDate] = useState(currentDate === firstDate);
+    const [isLastDate, setIsLastDate] = useState(currentDate === lastDate);
 
     const changePrevDate = () => {
         if (currentDate > firstDate) {
@@ -35,6 +40,8 @@ const Dispatch = () => {
         }
     }
 
+
+    
     const checkEndDate = () => {
         if (currentDate <= firstDate) setIsFirstDate(true);
         else setIsFirstDate(false);
@@ -44,10 +51,9 @@ const Dispatch = () => {
     }
 
 
-    const test = () => {
-        getDispatchListApi(70, currentDate).then((resonse) => {
-            console.log(resonse);
-            setDispatchDataList(resonse.data.object);
+    const fetchDispatchData = () => {
+        getDispatchListApi(70, currentDate).then((response) => {
+            setDispatchDataList(response.data.object);
         }).catch(error => {
             console.log(error);
             setDispatchDataList([]);
@@ -56,8 +62,9 @@ const Dispatch = () => {
 
     useEffect(() => {
         checkEndDate();
-        test();
-    }, [currentDate]);
+        fetchDispatchData();
+    }, [currentDate, showModal]);
+
 
     const props: DispatchProps = {
         currentDate,
@@ -65,7 +72,8 @@ const Dispatch = () => {
         changeNextDate,
         isFirstDate,
         isLastDate,
-        tableDataList: dispatchDataList
+        tableDataList: dispatchDataList,
+        showModal
     }
 
     return <DispatchView {...props} />

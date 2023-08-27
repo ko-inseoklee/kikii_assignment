@@ -2,10 +2,10 @@ import { useState } from "react"
 import LoginView from "./login_view"
 import { loginApi } from "../../apis/auth/auth";
 import { useAppDispatch } from "../../config/redux/hooks";
-import { showAlert } from "../../config/redux/slices/alertSlice";
+import { showAlert } from "../../config/redux/slices/alert_slice";
 import { UserModel } from "../../apis/auth/user_model";
-import { setCurrentUser } from "../../config/redux/slices/userSlice";
-import { setToken } from "../../config/redux/slices/tokenSlice";
+import { setCurrentUser } from "../../config/redux/slices/user_slice";
+import { setToken } from "../../config/redux/slices/token_slice";
 
 export interface LoginProps {
     id: string,
